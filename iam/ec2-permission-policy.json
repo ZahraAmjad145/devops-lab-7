@@ -1,0 +1,25 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ReadWebsiteFiles",
+            "Effect": "Allow",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::cv-23l-3072/site/*"
+        },
+        {
+            "Sid": "ListWebsiteFilesOnly",
+            "Effect": "Allow",
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::cv-23l-3072",
+            "Condition": {
+                "StringLike": {
+                    "s3:prefix": [
+                        "site/",
+                        "site/*"
+                    ]
+                }
+            }
+        }
+    ]
+}
