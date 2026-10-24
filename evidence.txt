@@ -1,0 +1,64 @@
+AWS LAB 7 - EVIDENCE REPORT
+Date: Sat, Oct 24, 2026 10:52:46 PM
+Region: ap-southeast-2
+
+===== 1. CALLER IDENTITY =====
+$ aws sts get-caller-identity --region ap-southeast-2
+collect-evidence.sh: line 22: aws: command not found
+NOTE: Command failed with exit code 127.
+
+===== 2. S3 PUBLIC-ACCESS SETTINGS =====
+$ aws s3api get-public-access-block --bucket cv-23l-3072 --region ap-southeast-2
+collect-evidence.sh: line 22: aws: command not found
+NOTE: Command failed with exit code 127.
+
+===== 3. S3 VERSIONING =====
+$ aws s3api get-bucket-versioning --bucket cv-23l-3072 --region ap-southeast-2
+collect-evidence.sh: line 22: aws: command not found
+NOTE: Command failed with exit code 127.
+
+===== 4. S3 OBJECTS =====
+$ aws s3api list-objects-v2 --bucket cv-23l-3072 --prefix site/ --region ap-southeast-2
+collect-evidence.sh: line 22: aws: command not found
+NOTE: Command failed with exit code 127.
+
+===== 5. EC2 IAM POLICY =====
+$ aws iam get-role-policy --role-name cv-ec2-role-23l-3072 --policy-name cv-ec2-s3-read-policy --region ap-southeast-2
+collect-evidence.sh: line 22: aws: command not found
+NOTE: Command failed with exit code 127.
+
+===== 6. LAMBDA IAM POLICY =====
+$ aws iam get-role-policy --role-name cv-lambda-role-23l-3072 --policy-name cv-lambda-s3-read-policy --region ap-southeast-2
+collect-evidence.sh: line 22: aws: command not found
+NOTE: Command failed with exit code 127.
+
+===== 7. EC2 SECURITY GROUP =====
+$ aws ec2 describe-instances --instance-ids i-069dc3d4ef86ff3d1 --query Reservations[].Instances[].{InstanceId:InstanceId,State:State.Name,SecurityGroups:SecurityGroups,MetadataOptions:MetadataOptions} --output json --region ap-southeast-2
+collect-evidence.sh: line 22: aws: command not found
+NOTE: Command failed with exit code 127.
+
+===== 8. EC2 INSTANCE =====
+$ aws ec2 describe-instances --instance-ids i-069dc3d4ef86ff3d1 --query Reservations[].Instances[].{InstanceId:InstanceId,InstanceType:InstanceType,PublicIpAddress:PublicIpAddress,IamInstanceProfile:IamInstanceProfile,Tags:Tags} --output json --region ap-southeast-2
+collect-evidence.sh: line 22: aws: command not found
+NOTE: Command failed with exit code 127.
+
+===== 9. WEBSITE ENDPOINTS =====
+EC2 address: http://13.236.10.132
+Lambda address: https://7vap3zbuz42wq5tx5rejfns75a0hkirq.lambda-url.ap-southeast-2.on.aws/
+
+Testing EC2 website...
+HTTP status: 200
+
+Testing Lambda website...
+HTTP status: 200
+
+===== 10. LAMBDA LOGS =====
+$ aws logs describe-log-streams --log-group-name /aws/lambda/cv-lambda-23l-3072 --order-by LastEventTime --descending --limit 1 --region ap-southeast-2
+collect-evidence.sh: line 22: aws: command not found
+NOTE: Command failed with exit code 127.
+
+===== 11. LOG RETENTION =====
+$ aws logs describe-log-groups --log-group-name-prefix /aws/lambda/cv-lambda-23l-3072 --query logGroups[].{LogGroupName:logGroupName,RetentionInDays:retentionInDays} --output json --region ap-southeast-2
+collect-evidence.sh: line 22: aws: command not found
+NOTE: Command failed with exit code 127.
+
